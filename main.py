@@ -1,7 +1,7 @@
 from flask import Flask,request,abort
 from linebot import LineBotApi,WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent,TextMessage,TextSendMessage,DatetimePickerTemplateAction, TemplateSendMessage, ConfirmTemplate, MessageAction
+from linebot.models import MessageEvent, PostbackEvent, TextMessage,TextSendMessage,DatetimePickerTemplateAction, TemplateSendMessage, ConfirmTemplate, MessageAction
 import os
 
 app=Flask(__name__)
@@ -24,6 +24,27 @@ def callback():
         abort(400)
     return "OK"
 
+@handler.add(PostbackEvent)
+def on_postback(event):
+    reply_token = event.reply_token
+    user_id = event.source.user_id
+    postback_msg = event.postback.data
+
+    line_bot_api.push_message(
+            to=user_id,
+            messages=TextSendMessage(text=postback_msg)
+    )
+    if postback_msg == 'is_show=1':
+        line_bot_api.push_message(
+            to=user_id,
+            messages=TextSendMessage(text='is_showオプションは1だよ！')
+        )
+    elif postback_msg == 'is_show=0':
+        line_bot_api.push_message(
+            to=user_id,
+            messages=TextSendMessage(text='is_showオプションは0だよ！')
+        )
+
 @handler.add(MessageEvent,message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
@@ -35,7 +56,7 @@ def handle_message(event):
                     actions=[
                         DatetimePickerTemplateAction(
                             label='Setting',
-                            data='action=buy&itemid=1',
+                            data='action=settime',
                             mode='datetime',
                             min='2017-12-25t00:00',
                             max='2044-01-24t23:59'
