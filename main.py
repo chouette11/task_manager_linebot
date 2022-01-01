@@ -28,7 +28,7 @@ def callback():
 def on_postback(event):
     reply_token = event.reply_token
     user_id = event.source.user_id
-    postback_msg = event.postback.params['datetime']
+    postback_msg = event.postback.data
 
     line_bot_api.push_message(
             to=user_id,
@@ -52,19 +52,15 @@ def handle_message(event):
         TemplateSendMessage(
                 alt_text='Confirm template',
                 template=ConfirmTemplate(
-                    text='でいいですか？',
+                    text=event.message.text,
                     actions=[
                         DatetimePickerTemplateAction(
-                            label='Setting',
-                            data='action=settime',
+                            label='締め切り選択',
+                            data=event.message.text,
                             mode='datetime',
                             min='2017-12-25t00:00',
                             max='2044-01-24t23:59'
                         ),
-                        MessageAction(
-                            label='だめ',
-                            text='だめ'
-                        )
                     ]
                 )
             )
