@@ -1,7 +1,7 @@
 from flask import Flask,request,abort
 from linebot import LineBotApi,WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent,TextMessage,TextSendMessage
+from linebot.models import MessageEvent,TextMessage,TextSendMessage,DatetimePickerTemplateAction
 import os
 
 app=Flask(__name__)
@@ -33,15 +33,18 @@ def handle_message(event):
                 template=ConfirmTemplate(
                     text=pro_list[num] + 'でいいですか？',
                     actions=[
-                        {
-                            "type": "datetimepicker",
-                            "label": "日時を選択してください。",
-                            "data": "action=settime",
-                            "mode": "datetime",
-                            "initial": "2017-12-25t00:00",
-                            "max": "2021-01-24t23:59",
-                            "min": "2022-12-25t00:00"
-                        }
+                        DatetimePickerTemplateAction(
+                            label='Setting',
+                            data='action=buy&itemid=1',
+                            mode='date',
+                            initial='2017-04-01',
+                            min='2017-04-01',
+                            max='2099-12-31'
+                        ),
+                        MessageAction(
+                            label='だめ',
+                            text='だめ'
+                        )
                     ]
                 )
             )
