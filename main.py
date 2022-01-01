@@ -36,7 +36,7 @@ def handle_message(event):
                         DatetimePickerTemplateAction(
                             label='Setting',
                             data='action=buy&itemid=1',
-                            mode='date',
+                            mode='datetime',
                             min='2017-04-01',
                             max='2099-12-31'
                         ),
