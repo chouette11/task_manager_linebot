@@ -37,8 +37,8 @@ def handle_message(event):
                             label='Setting',
                             data='action=buy&itemid=1',
                             mode='datetime',
-                            min='2017-04-01',
-                            max='2099-12-31'
+                            min='2017-12-25t00:00',
+                            max='2044-01-24t23:59'
                         ),
                         MessageAction(
                             label='だめ',
