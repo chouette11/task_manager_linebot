@@ -56,7 +56,7 @@ def handle_message(event):
                     actions=[
                         DatetimePickerTemplateAction(
                             label='締め切り選択',
-                            data=event.message.text,
+                            data=event.message.text + "message",
                             mode='datetime',
                             min='2017-12-25t00:00',
                             max='2044-01-24t23:59'
