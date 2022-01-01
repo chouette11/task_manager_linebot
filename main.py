@@ -37,7 +37,6 @@ def handle_message(event):
                             label='Setting',
                             data='action=buy&itemid=1',
                             mode='date',
-                            initial='2017-04-01',
                             min='2017-04-01',
                             max='2099-12-31'
                         ),
