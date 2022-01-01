@@ -28,7 +28,7 @@ def callback():
 def on_postback(event):
     reply_token = event.reply_token
     user_id = event.source.user_id
-    postback_msg = event.postback.tostring()
+    postback_msg = event.postback.mode
 
     line_bot_api.push_message(
             to=user_id,
