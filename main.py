@@ -26,7 +26,26 @@ def callback():
 
 @handler.add(MessageEvent,message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+    line_bot_api.reply_message(
+        event.reply_token,
+        TemplateSendMessage(
+                alt_text='Confirm template',
+                template=ConfirmTemplate(
+                    text=pro_list[num] + 'でいいですか？',
+                    actions=[
+                        {
+                            "type": "datetimepicker",
+                            "label": "日時を選択してください。",
+                            "data": "action=settime",
+                            "mode": "datetime",
+                            "initial": "2017-12-25t00:00",
+                            "max": "2021-01-24t23:59",
+                            "min": "2022-12-25t00:00"
+                        }
+                    ]
+                )
+            )
+        )
 
 if __name__=="__main__":
     port=int(os.getenv("PORT",5000))
